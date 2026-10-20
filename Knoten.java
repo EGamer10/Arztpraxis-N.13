@@ -2,12 +2,12 @@ public class Knoten extends Listenelement
 {
     //Attribute
     Listenelement nachfolger;
-    Patient daten;
+    Datenelement daten;
     
     //Konstruktor
-    public Knoten(Patient pat)
+    public Knoten(Datenelement d)
     {
-        daten = pat;
+        daten = d;
         nachfolger = new Abschluss();
     }
         
@@ -26,7 +26,7 @@ public class Knoten extends Listenelement
         daten.informationAusgeben();
     }
     
-    public Patient datenelementGeben()
+    public Datenelement datenelementGeben()
     {
         return daten;
     }
@@ -38,11 +38,13 @@ public class Knoten extends Listenelement
     
     public Patient suchen(String name)
     {
-        if(daten.namenGeben().equals(name))
-        {
-            return daten;
+        if (daten instanceof Patient pat){
+            if(pat.namenGeben().equals(name)){
+                return pat;
+            }
+            return nachfolger.suchen(name);
         }
-        else return nachfolger.suchen(name);
+        return null;
     }
     
     public Listenelement löschen (String name)
@@ -58,10 +60,6 @@ public class Knoten extends Listenelement
     }
     }
     
-    public Patient endeGeben(Patient ende)
-    {
-        return nachfolger.endeGeben(daten);
-    }
     
     public Listenelement hintenEinfügen(Patient neu)
     {
@@ -99,23 +97,30 @@ public class Knoten extends Listenelement
     }
     public Listenelement sortiertEinfügen(Patient p){
         //Zuerst wird der neue Patient pat mit dem Datenelement verglichen
-        if(daten.istKleinerAls(p)){
-            nachfolger = nachfolger.sortiertEinfügen(p);
-            return this;
-        }
-        else {
-            Knoten a = new Knoten(p);
-            a.nachfolger = this;
-            return a;
-        }
-    }
-
-    public Patient nächsterPatientSuchen(String wunschAzt){
-        if (daten.wunschArztCheck(wunschAzt)){
-            return daten;
+        if (daten instanceof Patient pat){
+            if(pat.istKleinerAls(p)){
+                nachfolger = nachfolger.sortiertEinfügen(p);
+                return this;
+            }
+            else {
+                Knoten a = new Knoten(p);
+                a.nachfolger = this;
+                return a;
+            }
         }
         else{
-            return nachfolger.nächsterPatientSuchen(wunschAzt);
+            Knoten a = new Knoten(p);
+            a.nachfolger = this;
+            return a;}
+    }
+
+    public Patient nächsterPatientSuchen(String wunschArzt){
+        if (daten instanceof Patient pat){
+            if (pat.wunschArztCheck(wunschArzt)){
+                return pat;
+            }
+            return nachfolger.nächsterPatientSuchen(wunschArzt);
         }
+        return null;
     }
 }

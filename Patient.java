@@ -1,16 +1,19 @@
-public class Patient {
+public class Patient extends Datenelement{
     
     private String name;
     private String arztWunsch;
+    private Stapel krankenakte;
 
     public Patient(String name, String arztWunsch){
         this.name = name;
         this.arztWunsch = arztWunsch;
+        krankenakte = new Stapel();
     }
 
     public Patient(String name){
         this.name = name;
         arztWunsch = null;
+        krankenakte = new Stapel();
     }
     
     //Methoden
@@ -26,7 +29,7 @@ public class Patient {
             System.out.println("Gewünschter Arzt: 'nicht gewählt'");
         }
         else{
-            System.out.println("Gewünschter Arzt:"+arztWunsch);
+            System.out.println("Gewünschter Arzt: "+arztWunsch);
         }
     }
     
@@ -44,9 +47,49 @@ public class Patient {
         }
     }
     public boolean wunschArztCheck(String arztWunsch){
-        if (arztWunsch == this.arztWunsch || this.arztWunsch ==  "egal"){
-            return true;
-        }
-        return false;
+        return arztWunsch.equals(this.arztWunsch) || this.arztWunsch.equals("egal" ) || this.arztWunsch == null;
     }
+
+    public void informationAusgebenMitStapel()
+    {
+        System.out.println("Name : "+name);
+        if (arztWunsch == null || arztWunsch.equals("")){
+            System.out.println("Gewünschter Arzt: 'nicht gewählt'");
+        }
+        else{
+            System.out.println("Gewünschter Arzt: "+arztWunsch);
+        }
+        krankenakte.ausgeben();
+    }
+
+    public void BehandlungHinzufügen(Behandlung behandlung){
+        krankenakte.vorneEinfügen(behandlung);
+    }
+
+    public void neusteBehandlungAusgeben(){
+        System.out.println("Letzte Behandlung von "+name+":");
+        krankenakte.vorneAusgeben();
+    }
+
+    public void neusteBehandlungEntfernen(){
+        krankenakte.anfangEntfernen();
+    }
+
+    public void alleBehandlungenAusgegeben(){
+        System.out.println("Krankenakte von "+name+":");
+        krankenakte.ausgeben();
+    }
+
+    public String arztWunschGeben(){
+        return arztWunsch;
+    }
+
+    public void arztWunschEntfernen(){
+        this.arztWunsch = null;
+    }
+
+    public void arztWunschSetzen(String arztWunschNeu){
+        this.arztWunsch = arztWunschNeu;
+    }
+
 }

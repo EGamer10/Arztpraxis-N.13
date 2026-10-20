@@ -1,4 +1,4 @@
-public class Liste {
+public class Liste{
     private Listenelement anfang;
 
 
@@ -6,12 +6,26 @@ public class Liste {
     {
         anfang = new Abschluss();
     }
+
     
-    void vorneEinfügen(Patient neuerPatient)
+    void vorneEinfügen(Datenelement neuesDatenelement)
     {
-        Knoten k = new Knoten(neuerPatient);
+        Knoten k = new Knoten(neuesDatenelement);
         k.nachfolger = anfang;
         anfang = k;
+    }
+
+    public void anfangEntfernen() {
+        anfang = anfang.nachfolgerGeben();
+    }
+
+    public void vorneAusgeben(){
+        if (anfang instanceof Knoten k){
+            k.informationAusgeben();
+        }
+        else{
+            System.out.println("Liste ist leer");
+        }
     }
 
     public void hintenEinfügen(Patient neu)
@@ -55,6 +69,16 @@ public class Liste {
     }
     public void sortiertEinfügen(Patient p){
         anfang = anfang.sortiertEinfügen(p);
+    }
+
+    public void ausgeben()
+    {
+        Listenelement temp = anfang;
+        while(temp.nachfolgerGeben() != null)
+        {
+            temp.datenelementGeben().informationAusgeben();
+            temp = temp.nachfolgerGeben();
+        }
     }
 
 }

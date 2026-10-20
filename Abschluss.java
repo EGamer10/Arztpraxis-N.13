@@ -10,11 +10,13 @@ public class Abschluss extends Listenelement
     }
 
     //Methoden
+    @Override 
     public int restlängeGeben()
     {
         return 0;
     }
     
+    @Override
     public Patient suchen(String name)
     {
         return null;
@@ -25,17 +27,14 @@ public class Abschluss extends Listenelement
         return this;
     }
     
-    public Patient endeGeben(Patient ende)
-    {
-        return ende;
-    }
-    
+    @Override 
     public Listenelement nachfolgerGeben()
     {
         return null;
     }
    
-    public Patient datenelementGeben()
+    @Override 
+    public Datenelement datenelementGeben()
     {
         return null;
     }
@@ -44,6 +43,7 @@ public class Abschluss extends Listenelement
         return new Knoten(neu);
     }
     
+    @Override
     public Listenelement StelleXeinfügen(int x, int aktuelleStelle, Patient pat)
     {
         Knoten a = new Knoten (pat);
@@ -51,15 +51,18 @@ public class Abschluss extends Listenelement
         return a;
     }
     
+    @Override
     public Listenelement vorEinemElementEinfügen(Patient patNeu, Patient patInListe)
     {
         return this;
     }
+    @Override
     public Listenelement sortiertEinfügen(Patient p){
         Knoten a = new Knoten(p);
         a.nachfolger = this;
         return a;
     }
+    @Override
     public Patient nächsterPatientSuchen(String wunschArzt){
         return null;
     }
